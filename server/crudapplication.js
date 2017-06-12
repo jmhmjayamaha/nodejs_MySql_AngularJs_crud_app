@@ -1,6 +1,10 @@
 var express = require('express');
 var mysql = require('mysql');
+var bodyParser = require('body-parser');
 var app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -33,6 +37,14 @@ app.get('/api/listUsers', function (req, res) {
    });
 });
 
+app.post('/api/addUser', function(req, res) {
+  var sql = "INSERT INTO nodejs.Users(name,age,address)VALUES('"+ req.body.name +"', '"+ req.body.age +"','"+req.body.address+"')";
+
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+  res.status(200).json({ status: 'SUCCESS' });
+});
 
 var server = app.listen(8081, function () {
 
