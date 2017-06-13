@@ -37,6 +37,16 @@ app.get('/api/listUsers', function (req, res) {
    });
 });
 
+app.get('/api/findUser', function (req, res) {
+   res.writeHead(200, {"Content-Type": "application/json"});
+
+   con.query("SELECT * FROM Users WHERE id = " + req.query.id, function (err, result) {
+     if (err) throw err;
+     var data = JSON.stringify(result);
+     res.end(data);
+   });
+});
+
 app.post('/api/addUser', function(req, res) {
   var sql = "INSERT INTO nodejs.Users(name,age,address)VALUES('"+ req.body.name +"', '"+ req.body.age +"','"+req.body.address+"')";
 
@@ -44,6 +54,15 @@ app.post('/api/addUser', function(req, res) {
     if (err) throw err;
   });
   res.status(200).json({ status: 'SUCCESS' });
+});
+
+app.put('/api/updateUser', function(req, res) {
+   var sql = "UPDATE nodejs.Users SET  name = '"+ req.body.name +"',age = '"+ req.body.age +"' ,address = '"+req.body.address+"' WHERE id = "+ req.body.id;
+
+   con.query(sql, function (err, result) {
+    if (err) throw err;
+   });
+   res.status(200).json({ status: 'SUCCESS' });
 });
 
 var server = app.listen(8081, function () {
