@@ -28,6 +28,9 @@ app.get('/api', function (req, res) {
 })
 
 app.get('/api/listUsers', function (req, res) {
+   res.header("Access-Control-Allow-Origin", "http://localhost");
+   res.header("Access-Control-Allow-Methods", "GET, POST");
+
    res.writeHead(200, {"Content-Type": "application/json"});
 
    con.query("SELECT * FROM Users", function (err, result) {
@@ -48,6 +51,9 @@ app.get('/api/findUser', function (req, res) {
 });
 
 app.post('/api/addUser', function(req, res) {
+  // res.header("Access-Control-Allow-Origin", "http://localhost");
+  // res.header("Access-Control-Allow-Methods", "GET, POST");
+
   var sql = "INSERT INTO nodejs.Users(name,age,address)VALUES('"+ req.body.name +"', '"+ req.body.age +"','"+req.body.address+"')";
 
   con.query(sql, function (err, result) {
