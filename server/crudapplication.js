@@ -74,6 +74,15 @@ app.put('/api/updateUser', function(req, res) {
    res.status(200).json({ status: 'SUCCESS' });
 });
 
+app.delete('/api/deleteUser', function(req, res) {
+  var sql = "DELETE FROM nodejs.Users WHERE id = " + req.query.id;
+
+  con.query(sql, function (err, result) {
+   if (err) throw err;
+  });
+  res.status(200).json({ status: 'SUCCESS' });
+});
+
 var server = app.listen(8081, function () {
 
   var host = server.address().address
