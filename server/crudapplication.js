@@ -62,7 +62,7 @@ app.post('/api/addUser', function(req, res) {
   con.query(sql, function (err, result) {
     if (err) throw err;
   });
-  res.status(200).json({ status: 'SUCCESS' });
+  res.status(201).json({ status: 'SUCCESS' });
 });
 
 app.put('/api/updateUser', function(req, res) {
